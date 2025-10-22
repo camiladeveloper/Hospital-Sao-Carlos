@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consultas - Hospital São Carlos</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="top-bar">
+    <span>Agendamento de consultas: (11) 1234-5678</span>
+    <span class="social-links">
+      Siga as nossas redes sociais:
+      <a href="#"><img src="img/instagram-icon.png" alt="Instagram"></a>
+      <a href="#"><img src="img/facebook-icon.png" alt="Facebook"></a>
+      <a href="#"><img src="img/email-icon.png" alt="Email"></a>
+    </span>
+  </div>
+    
+  <header class="nav-bar">
+    <div class="logo-container">
+      <img src="img/logotipo.png" alt="Logo Hospital São Carlos" class="hospital-logo">
+      <div class="hospital-name-text">
+        SÃO CARLOS
+        <span>HOSPITAL & ATENDIMENTO MÉDICO</span>
+      </div>
+    </div>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="home.html" class="nav-link">HOME</a></li>
+        <li><a href="medicos.html" class="nav-link">MÉDICOS</a></li>
+        <li><a href="pacientes.html" class="nav-link">PACIENTES</a></li>
+        <li><a href="consultas.html" class="nav-link">CONSULTAS</a></li>
+        <li><a href="contato.html" class="nav-link">CONTATOS</a></li>
+        <li><a href="index.html" onclick="logout()" class="nav-link sair-btn">SAIR</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="consultas-main">
+    <div class="top-controls">
+      <form id="formConsulta" class="register-section" onsubmit="agendarConsulta(event)">
+        <h2 class="section-title">Agendar Nova Consulta</h2>
+        
+        <input type="hidden" id="consultaId" value="">
+        
+        <label for="dataConsulta">Data:</label>
+        <input type="date" id="dataConsulta" required class="styled-input">
+
+        <label for="medicoConsulta">Médico:</label>
+        <select id="selectMedico" required class="styled-input">
+          <option value="">Selecione o médico</option>
+        </select>
+
+        <label for="horaConsulta">Horário:</label>
+        <input type="time" id="selectHorario" required class="styled-input">
+        </select>
+
+        <label for="pacienteConsulta">Paciente:</label>
+        <select id="selectPaciente" required class="styled-input">
+          <option value="">Selecione o paciente</option>
+        </select>
+
+        <button type="submit" class="styled-button">Salvar Consulta</button>
+      </form>
+    </div>
+
+	<div id="resultadoAgendar" class="mensagem"></div>
+	<div id="resultadoAtualizar" class="mensagem"></div>
+
+    <div class="table-container">
+      <div class="filter-section">
+        <h2 class="section-title">Consultas Agendadas</h2>
+          <p>Filtrar por:</p>
+          <div class="filter-container">
+            <select id="tipoFiltro" class="styled-input filter-select">
+              <option value="id">ID</option>
+              <option value="nome" selected>Nome do Médico</option>
+              <option value="status">Status</option>
+            </select>
+            <input type="text" id="filtro" oninput="filtrarConsultas()" placeholder="Digite aqui..." class="styled-input">
+          </div>
+        </div>
+
+      <table>
+		<thead>
+          <tr>
+			<th class="table-header action-col">AÇÕES</th>
+            <th class="table-header id-col">ID</th>
+            <th class="table-header data-col">DATA</th>
+            <th class="table-header hora-col">HORA</th>
+            <th class="table-header med-col">MÉDICO</th>
+            <th class="table-header pac-col">PACIENTE</th>
+            <th class="table-header status-col">STATUS</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaConsultas"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 - Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="js/consultas.js" defer></script>
+</body>
+</html>

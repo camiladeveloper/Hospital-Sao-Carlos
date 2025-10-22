@@ -1,0 +1,994 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  /* VARIÁVEIS DE COR: Facilitam a manutenção e garantem a consistência visual do tema. */
+--color-primary-teal: #68c0c9;     /* Azul esverdeado padrão (usado em botões e inputs de login) */
+--color-secondary-blue: #80D7D9;   /* Azul claro principal (usado no topo, tabela e footer) */
+--color-primary-dark: #1b2a41;     /* Azul escuro (Texto principal e cabeçalhos) */
+--color-secondary-yellow: #e9ec71; /* Amarelo/verde de Ação (CTA Button) */
+--color-text-light: #fff;          /* Texto claro */
+--color-bg-dark: #32353a;          /* Fundo do rodapé (cor original) */
+--color-text-gray: #555;           /* Cinza para labels e textos secundários */
+}
+
+/* ------- DEFINIÇÕES GLOBAIS / RESET ------- */
+* {
+    /* Reset básico para garantir que a margem e padding não interfiram no layout. */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Define a fonte global para todos os elementos. */
+    font-family: 'Roboto', sans-serif; 
+}
+
+body {
+    /* Configuração de layout Flex para garantir que o footer permaneça no final da página (sticky footer). */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* Estilos visuais de fundo e cor de texto padrão. */
+    background-color: #f7f7f7;
+    color: var(--color-primary-dark);
+}
+
+/* ------- CABEÇALHO (HEADER) ------- */
+/* BARRA SUPERIOR (Informativa - Telefone e Redes Sociais) */
+.top-bar {
+    background-color: var(--color-secondary-blue);
+    color: var(--color-primary-dark); /* Cor do texto (telefone) */
+    padding: 0.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    }
+
+.top-bar span {
+    font-weight: bolder;
+}
+
+.social-links {
+    /* Garante que os ícones usem a cor clara para contraste */
+    color: var(--color-text-light); 
+    font-weight: bolder;
+}
+
+.social-links img {
+    /* Estiliza os ícones de redes sociais para alinhamento e tamanho corretos. */
+    height: 18px;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+/* ------- MENU PRINCIPAL (Navegação e Logo)  ------- */
+.nav-bar {
+    background-color: #FFFBEB;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* Sombra suave para destacar o cabeçalho do conteúdo. */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Estilos do Logo */
+.logo-container {
+    /* Usa flexbox para alinhar o logo (imagem/ícone) e o texto do hospital. */
+    display: flex;
+    align-items: center;
+}
+
+.hospital-logo {
+    height: 90px;
+    margin-right: 10px;
+}
+
+.hospital-name-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1.2;
+    color: var(--color-primary-dark);
+}
+
+.hospital-name-text span {
+    /* Estilo para a sub-linha do logo (e.g., HOSPITAL & ATENDIMENTO MÉDICO). */
+    display: block;
+    font-size: 0.7rem;
+    font-weight: normal;
+    color: #888;
+}
+
+/* Estilos da Navegação Principal (Links) */
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-link {
+    color: var(--color-primary-dark);
+    text-decoration: none;
+    margin-left: 20px;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    transition: color 0.2s;
+}
+
+/* Efeitos de Interação (Hover e Página Atual) - feedback visual para o usuário. */
+.nav-link:hover {
+    color: #00bcd4; /* Azul mais forte para destaque */
+}
+
+.nav-link {
+    position: relative;
+    color: var(--color-primary-dark);
+    text-decoration: none;
+    margin-left: 20px;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+/* Cria a “linha invisível” abaixo do texto */
+.nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: 0; 
+    right: 0;                /* começa da direita */
+    width: 0;                /* largura inicial zero */
+    height: 2px;             /* espessura da linha */
+    background-color: #00bcd4; /* cor da linha */
+    transition: width 0.3s ease, right 0.3s ease;
+}
+
+/* Ao passar o mouse, a linha cresce da direita pra esquerda */
+.nav-link:hover::after {
+    width: 100%;
+    right: 0;
+    left: auto;
+}
+
+/* Opcional: muda a cor do texto no hover */
+.nav-link:hover {
+    color: #00bcd4;
+}
+
+/* ------- LAYOUTS DE PÁGINA ------- */
+
+/* Layout Principal do Gerenciamento de Médicos */
+.medicos-main, .pacientes-main, .consultas-main {
+    width: 100%;
+    max-width: none;
+    margin: 40px auto 0; /* cria 40px de espaço entre o header e o conteúdo */
+    padding: 0 30px;
+}
+
+.top-controls {
+    /* Distribui os painéis de filtro e registro na parte superior. */
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 30px; 
+}
+
+.filter-section {
+    /* Painel de Filtro: Define largura fixa para priorizar o espaço da seção de registro. */
+    background-color: var(--color-text-light);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    flex: 0 0 35%; /* Ocupa 35% do espaço */
+}
+
+.register-section {
+    /* Painel de Registro/Edição: Ocupa o espaço restante. */
+    background-color: var(--color-text-light);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    flex: 1;
+}
+
+.section-title {
+    color: var(--color-primary-dark);
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+/* Estilo padrão para todos os inputs de formulário no sistema. */
+.styled-input {
+    width: 100%;
+    padding: 10px 15px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+	background-color: white;
+    transition: border-color 0.3s;
+}
+
+/* Feedback visual de foco (acessibilidade e usabilidade). */
+.styled-input:focus {
+    border-color: var(--color-secondary-blue);
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 188, 212, 0.3);
+}
+
+/* Modificador de input: Input específico para a seção de filtro. */
+.filter-input {
+    background-color: #fff7d9;
+    border: 1px solid #ffeb3b;
+    font-weight: bold;
+}
+
+.register-section label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--color-text-gray);
+}
+
+/* Estilo padrão para botões de ação (e.g., Salvar, Adicionar). */
+.styled-button {
+    background-color: var(--color-secondary-yellow);
+    color: #000;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.1s;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.styled-button:hover {
+    /* Escurece o azul e adiciona um leve movimento para feedback. */
+    background-color: #ffeb3b; /* Cor levemente ajustada para contraste no hover */
+    transform: translateY(-1px);
+}
+
+/* Estilos para Tabela (Lista de Médicos) */
+.table-container {
+    /* Container para estilizar e garantir responsividade da tabela. */
+    background-color: var(--color-text-light);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    overflow-x: auto; /* Garante que a tabela seja scrollável em telas pequenas. */
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0; /* Usa border-spacing: 0 para controlar os cantos arredondados. */
+}
+
+/* Estilos de Cabeçalho da Tabela */
+.table-header {
+    background-color: var(--color-secondary-blue);
+    color: var(--color-primary-dark);
+    font-weight: 900;
+    text-transform: uppercase;
+    padding: 15px 10px;
+    border: none;
+    text-align: center;
+    font-size: 1rem;
+}
+
+/* Estilos das Linhas do Corpo da Tabela */
+#tabelaMedicos tr,
+#tabelaPacientes tr,
+#tabelaConsultas tr {
+    cursor: default;
+    transition: background-color 0.2s;
+}
+
+#tabelaMedicos tr:hover,
+#tabelaPacientes tr:hover,
+#tabelaConsultas tr:hover { 
+    background-color: #f0f0f0; /* Feedback visual ao passar o mouse. */
+}
+
+#tabelaMedicos td, 
+#tabelaPacientes td,
+#tabelaConsultas td{
+    background-color: #f7fcfc;
+    border: 1px solid #e0f0f0;
+    padding: 10px;
+    vertical-align: middle;
+    text-align: center;
+    height: 50px;
+}
+
+
+/* Estilos dos Ícones de Ação (Editar/Deletar) */
+.action-icons-inline {
+    /* Alinhamento dos ícones dentro da célula da tabela. */
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    align-items: center;
+}
+
+.icon-edit-img, .icon-delete-img {
+    cursor: pointer;
+    height: 24px;
+    width: 24px;
+    transition: opacity 0.2s;
+}
+
+.icon-edit-img:hover, .icon-delete-img:hover {  
+    opacity: 0.7; /* Feedback visual ao interagir com o ícone. */
+}
+
+/* MENSAGENS DE FEEDBACK (SUCESSO, ERRO, AVISO)  */
+
+
+
+
+
+
+.mensagem {
+
+
+  display: block;
+
+
+  margin-top: 15px;
+
+
+  padding: 12px 18px;
+
+
+  border-radius: 10px;
+
+
+  font-weight: 600;
+
+
+  text-align: center;
+
+
+  width: 100%;
+
+
+  max-width: 600px;
+
+
+  margin-left: auto;
+
+
+  margin-right: auto;
+
+
+  font-size: 1rem;
+
+
+  background-color: #f7f7f7;
+
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+
+
+  animation: fadeIn 0.4s ease-in-out;
+
+
+  transition: opacity 0.3s ease, transform 0.3s ease;
+
+
+}
+
+
+
+
+
+/* Animação de entrada suave */
+
+
+@keyframes fadeIn {
+
+
+  from {
+
+
+    opacity: 0;
+
+
+    transform: translateY(-8px);
+
+
+  }
+
+
+  to {
+
+
+    opacity: 1;
+
+
+    transform: translateY(0);
+
+
+  }
+
+
+}
+
+
+
+
+
+/* MENSAGEM DE SUCESSO */
+
+
+.mensagem.sucesso {
+
+
+  background-color: rgba(104, 192, 201, 0.15);
+
+
+  border: 2px solid #68c0c9;
+
+
+  color: #225c60;
+
+
+}
+
+
+
+
+
+/* MENSAGEM DE ERRO */
+
+
+.mensagem.erro {
+
+
+  background-color: rgba(200, 64, 88, 0.15); 
+
+
+  border: 2px solid #c04058;
+
+
+  color: #6b001d;
+
+
+}
+
+
+
+
+
+/* MENSAGEM DE AVISO */
+
+
+.mensagem.aviso {
+
+
+  background-color: rgba(233, 236, 113, 0.25);   border: 2px solid #e9ec71;
+
+
+  color: #6e6b00;
+
+
+}
+
+/* ----------------------------------------------------------- */
+/* PÁGINA INICIAL / HOME                 */
+/* ----------------------------------------------------------- */
+
+.main-content {
+    text-align: center;
+    padding: 2rem;
+}
+
+/* Faixa de Destaque / Slogan */
+.slogan-banner {
+    background-color: var(--color-secondary-blue); 
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
+    padding: 1rem;
+    color: var(--color-text-light);
+}
+
+.slogan-banner h2 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    font-size: 2.5rem;
+    margin-bottom: 0.3rem;
+}
+
+.slogan-banner p {
+    font-style: italic;
+    font-size: 1rem;
+    color: #f3f9f9;
+}
+
+.main-image {
+    /* Imagem de destaque centralizada e estilizada. */
+    width: 70%;
+    max-width: 800px;
+    border-radius: 20px;
+    margin: 1rem auto 2rem;
+    display: block;
+}
+
+.scroll-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    gap: 16px;
+    padding-bottom: 16px;
+    margin-top: 10px;
+
+  /* Esconde a barra de rolagem visualmente */
+    -ms-overflow-style: none; /* IE e Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.scroll-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+
+.post {
+    flex: 0 0 100%;
+    max-width: 800px;
+    height: 400px;
+    border-radius: 16px;
+    overflow: hidden;
+    scroll-snap-align: center;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.post:hover {
+    transform: scale(1.02);
+}
+
+.banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* Botão de Chamada para Ação (Call-to-Action) */
+.cta-button {
+    background-color: var(--color-secondary-yellow);
+    color: #FFFBEB; /* Cor de texto ajustada para melhor contraste */
+    font-weight: bold;
+    border: none;
+    width: fit-content;        /* botão se ajusta ao tamanho do texto */
+    padding: 14px 36px;        /* aumenta o espaço interno */
+    font-size: 1.1rem;         /* aumenta levemente o texto */
+    margin: 2rem auto;         /* mantém centralizado e com mais respiro */
+    display: block;
+    cursor: pointer;
+    border-radius: 8px;        /* deixa o botão mais agradável */
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.cta-button:hover {
+    /* Feedback visual de movimento e mudança de cor. */
+    background-color: #c9e238; /* tom de amarelo ligeiramente mais forte */
+    transform: scale(1.05);    /* cresce um pouquinho no hover */
+}
+
+/* ------- PÁGINA DE LOGIN ------- */
+
+.login-wrapper {
+    /* Garante que o box de login seja centralizado vertical e horizontalmente. */
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-box {
+    /* Container principal com cor de fundo da paleta primária. */
+    background-color: #97d7da; /* Variação do azul primário */
+    width: 400px;
+    height: auto;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-box h2 {
+    /* Título centralizado e em cor de destaque. */
+    text-align: center;
+    color: var(--color-text-light);
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+}
+
+.login-box label {
+    display: block;
+    font-weight: bold;
+    color: var(--color-text-light);
+    margin-top: 1rem;
+}
+
+.login-box input {
+    /* Estilo de input com fundo semi-transparente para mesclar com o box. */
+    width: 100%;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    background-color: #6fb4b7; /* Tom mais escuro do azul para contraste */
+    margin-top: 5px;
+    color: var(--color-text-light);
+    font-size: 1rem;
+    outline: none;
+}
+
+.login-box input::placeholder {
+    color: #cce7e8; /* Placeholder em tom muito claro para contraste suave. */
+}
+
+.login-box hr {
+    /* Linha divisória para separar visualmente os campos do botão. */
+    margin: 1.5rem 0;
+    border: none;
+    border-top: 2px solid var(--color-text-light);
+}
+
+.login-box button {
+    /* Botão de ação (ENTRAR) com a cor de destaque (amarelo). */
+    width: 100%;
+    background-color: var(--color-secondary-yellow);
+    color: var(--color-primary-dark); /* Cor de texto ajustada para contraste */
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.login-box button:hover {
+    background-color: #c9e238;
+    transform: translateY(-2px);
+}
+
+/* ------- PÁGINA DE CONSULTAS / AGENDAMENTO ------- */
+
+.consultas-container {
+    /* Container principal para conteúdo de agendamento/lista de consultas. */
+    max-width: 1000px;
+    margin: 40px auto;
+    background: var(--color-text-light);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+}
+
+.consultas-header h2 {
+    color: #004aad; /* Usando uma cor de contraste diferente para este módulo */
+    margin-bottom: 5px;
+}
+
+.consultas-table {
+    /* Tabela de listagem de consultas (diferente da tabela de médicos). */
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+}
+
+.consultas-table th {
+    background-color: #004aad;
+    color: var(--color-text-light);
+    padding: 12px;
+    text-align: left;
+}
+
+.consultas-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.agendamento-section {
+    /* Seção de formulário para agendar novas consultas. */
+    border-top: 2px solid #eee;
+    padding-top: 20px;
+}
+
+.agendamento-section h3 {
+    color: #004aad;
+}
+
+.agendamento-section input,
+.agendamento-section select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#buscarHorarios {
+    /* Botão de ação específico para busca de horários. */
+    background-color: #004aad;
+    color: var(--color-text-light);
+    border: none;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#buscarHorarios:hover {
+    background-color: #00337a;
+}
+
+/* ------- PÁGINA DE CONTATO ------- */
+
+.contato-main {
+    max-width: 1000px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: var(--color-text-light);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    line-height: 1.7; /* aumenta o espaçamento vertical entre linhas */
+    color: var(--color-primary-dark);
+}
+
+.contato-main section {
+  margin-bottom: 2.5rem; /* espaçamento entre blocos de conteúdo */
+}
+
+.contato-main h2 {
+    color: var(--color-primary-dark);
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    border-left: 6px solid var(--color-secondary-blue);
+    padding-left: 10px;
+}
+
+.contato-main p {
+    margin-bottom: 0.8rem; /* espaço entre parágrafos */
+    font-size: 1rem;
+    color: var(--color-text-gray);
+}
+
+.contato-main strong {
+    color: var(--color-primary-dark);
+}
+
+.mapa-container {
+    margin-top: 1.5rem;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mapa-iframe-wrapper iframe {
+    border: 0;
+    width: 100%;
+    height: 400px;
+    display: block;
+    border-radius: 10px;
+}
+
+/* Container da célula de ações */
+.btn-edit {
+  display: flex;
+  flex-direction: column;     /* coloca os botões um embaixo do outro */
+  justify-content: center;    /* centraliza verticalmente */
+  align-items: center;        /* centraliza horizontalmente */
+  gap: 6px;                   /* espaço entre Atualizar e Cancelar */
+  height: 100%;               /* mantém a altura fixa da célula */
+  padding: 6px;               /* espaçamento interno */
+  box-sizing: border-box;
+}
+
+/* Botões dentro da célula */
+.btn-edit .styled-button1,
+.btn-edit .styled-button2 {
+  width: 90px;                 
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Cores específicas */
+.btn-edit .styled-button1 {
+  background-color: #e9ec71;  /* amarelo */
+  color: #3a3a00;
+}
+
+.btn-edit .styled-button2 {
+  background-color: #68c0c9;  /* azul */
+  color: white;
+}
+
+/* Efeito hover */
+.btn-edit .styled-button1:hover,
+.btn-edit .styled-button2:hover {
+  transform: scale(1.05);
+  filter: brightness(0.95);
+}
+
+
+/* ------- RODAPÉ (FOOTER) ------- */
+
+footer {
+    /* Estilo para o rodapé padrão, usando a cor azul clara. */
+    background-color: var(--color-secondary-blue);
+    color: #000;
+    text-align: center;
+    font-weight: bold;
+    padding: 1rem;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+footer p {
+    margin: 4px 0;
+}
+
+
+/* ========================================================= */
+/* 🌍 RESPONSIVIDADE GERAL */
+/* ========================================================= */
+
+/* ----- CELULARES (até 768px) ----- */
+@media (max-width: 768px) {
+
+  /* HEADER */
+  .top-bar {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .nav-bar {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .hospital-logo {
+    height: 60px;
+  }
+
+  .hospital-name-text {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .main-nav ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .nav-link {
+    margin: 5px 0;
+    font-size: 1rem;
+  }
+
+  /* CONTEÚDOS PRINCIPAIS */
+  .top-controls {
+    flex-direction: column;
+  }
+
+  .filter-section,
+  .register-section {
+    width: 100%;
+    flex: none;
+  }
+
+  .medicos-main, 
+  .pacientes-main, 
+  .consultas-main {
+    padding: 0 10px;
+  }
+
+  /* TABELAS */
+  .table-container {
+    padding: 10px;
+    overflow-x: auto;
+  }
+
+  table {
+    font-size: 0.85rem;
+  }
+
+  /* LOGIN */
+  .login-box {
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  .login-box h2 {
+    font-size: 1.2rem;
+  }
+
+  /* HOME */
+  .slogan-banner h2 {
+    font-size: 1.6rem;
+  }
+
+  .main-image {
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  .cta-button {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  /* CONTATO */
+  .contato-main {
+    padding: 1.5rem;
+  }
+
+  .mapa-iframe-wrapper iframe {
+    height: 300px;
+  }
+}
+
+/* ----- TABLETS (769px a 1024px) ----- */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  .top-controls {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .filter-section,
+  .register-section {
+    width: 100%;
+  }
+
+  .nav-bar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .main-nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .main-image {
+    width: 80%;
+  }
+
+  .login-box {
+    width: 70%;
+  }
+}
+
+/* ----- DESKTOPS GRANDES (acima de 1024px) ----- */
+@media (min-width: 1025px) {
+  .medicos-main,
+  .pacientes-main,
+  .consultas-main {
+    max-width: 1200px;
+  }
+
+  .login-box {
+    max-width: 450px;
+  }
+}
